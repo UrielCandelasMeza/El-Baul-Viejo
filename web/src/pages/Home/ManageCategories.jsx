@@ -5,10 +5,10 @@ import Modal from "../../components/Modal";
 
 function ManageCategories() {
   const [categories, setCategories] = useState([]);
-  const [newName,    setNewName]    = useState("");
+  const [newName, setNewName] = useState("");
   const [loadingAdd, setLoadingAdd] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
-  const [modal,      setModal]      = useState({ type: "", message: "" });
+  const [modal, setModal] = useState({ type: "", message: "" });
 
   const fetchCategories = async () => {
     try {

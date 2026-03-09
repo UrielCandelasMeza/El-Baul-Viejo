@@ -1,9 +1,9 @@
 """Auth controller to manage register, login and verify tokens from user"""
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from extensions import db, bcrypt
 from src.models.user_model import User
 from src.lib.jwt import generate_tokens
-from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import get_jwt_identity, unset_jwt_cookies
 
 def register_user():
     """Register a new user"""
@@ -94,3 +94,10 @@ def verify_token():
             "name": user.name
         }
     }), 200
+
+
+def logout_user():
+    """Limpia las cookies JWT del navegador"""
+    response = make_response(jsonify({"success": True, "message": "Sesión cerrada"}))
+    unset_jwt_cookies(response)
+    return response, 200

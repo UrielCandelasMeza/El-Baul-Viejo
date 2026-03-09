@@ -20,10 +20,9 @@ function Carousel({ photos }) {
               className={`
                 w-16 h-16 rounded-xl overflow-hidden border-2 flex-shrink-0
                 transition-all duration-200 cursor-pointer
-                ${
-                  i === active
-                    ? "border-gold shadow-[0_0_0_2px_rgba(194,161,90,0.3)]"
-                    : "border-border hover:border-bronze"
+                ${i === active
+                  ? "border-gold shadow-[0_0_0_2px_rgba(194,161,90,0.3)]"
+                  : "border-border hover:border-bronze"
                 }
               `}>
               <img src={ph} alt="" className="w-full h-full object-cover" />
@@ -77,10 +76,9 @@ function Carousel({ photos }) {
                   onClick={() => setActive(i)}
                   className={`
                     rounded-full transition-all duration-200 cursor-pointer border-none
-                    ${
-                      i === active
-                        ? "w-5 h-2 bg-gold"
-                        : "w-2 h-2 bg-white/60 hover:bg-white/90"
+                    ${i === active
+                      ? "w-5 h-2 bg-gold"
+                      : "w-2 h-2 bg-white/60 hover:bg-white/90"
                     }
                   `}
                 />

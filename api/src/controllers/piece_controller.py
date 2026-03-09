@@ -132,10 +132,12 @@ def update_piece(piece_id: str):
     status       = request.form.get("status")
     category_ids = request.form.getlist("category_ids")
     new_photos   = request.files.getlist("photos")
+    # URLs de fotos existentes que el usuario quiere conservar
+    existing_photos = request.form.getlist("existing_photos")
 
     if name:
         piece.name = name
-    if description:
+    if description is not None:
         piece.description = description
     if category_ids:
         piece.category_ids = category_ids
@@ -156,11 +158,25 @@ def update_piece(piece_id: str):
                 "message": f"Status inválido. Opciones: {valid}"
             }), 400
 
-    if new_photos and any(p.filename for p in new_photos):
-        if len(new_photos) > MAX_PHOTOS:
-            return jsonify({"success": False, "message": "El máximo de fotos es 5"}), 400
+    # --- Manejo de fotos ---
+    # Extraer paths de las fotos existentes que se conservan
+    kept_paths = set()
+    kept_urls = []
+    for url in existing_photos:
+        path = url.split(f"{bucket_name}/")[-1].split("?")[0]
+        kept_paths.add(path)
+        kept_urls.append(url)
 
-        incoming = {}
+    # Subir fotos nuevas
+    new_urls = []
+    new_paths = set()
+    has_new = new_photos and any(p.filename for p in new_photos)
+
+    if has_new:
+        total = len(existing_photos) + len(new_photos)
+        if total > MAX_PHOTOS:
+            return jsonify({"success": False, "message": f"El máximo de fotos es {MAX_PHOTOS}"}), 400
+
         for photo in new_photos:
             if not allowed_file(photo.filename):
                 return jsonify({
@@ -171,32 +187,33 @@ def update_piece(piece_id: str):
 
             if len(file_bytes) > MAX_SIZE:
                 return jsonify({
-                    "success": False, 
+                    "success": False,
                     "message": "Cada foto debe pesar menos de 5MB"
                 }), 400
             file_path = build_file_path(file_bytes, photo.filename)
-            incoming[file_path] = (file_bytes, photo.content_type)
+            new_paths.add(file_path)
 
-        current_paths = {url.split(f"{bucket_name}/")[-1].split("?")[0] for url in piece.photos}
-        incoming_paths = set(incoming.keys())
+            # Solo subir si no existe ya en el bucket
+            existing_files = supabase.storage.from_(bucket_name).list()
+            existing_names = {f["name"] for f in existing_files}
+            if file_path not in existing_names:
+                supabase.storage.from_(bucket_name).upload(
+                    file=file_bytes,
+                    path=file_path,
+                    file_options={"content-type": photo.content_type}
+                )
+            new_urls.append(supabase.storage.from_(bucket_name).get_public_url(file_path))
 
-        to_upload = incoming_paths - current_paths
-        for file_path in to_upload:
-            file_bytes, content_type = incoming[file_path]
-            supabase.storage.from_(bucket_name).upload(
-                file=file_bytes,
-                path=file_path,
-                file_options={"content-type": content_type}
-            )
+    # Determinar fotos actuales de la pieza que ya no se necesitan
+    current_paths = {url.split(f"{bucket_name}/")[-1].split("?")[0] for url in piece.photos}
+    all_kept_paths = kept_paths | new_paths
+    to_delete = current_paths - all_kept_paths
 
-        to_delete = current_paths - incoming_paths
-        if to_delete:
-            supabase.storage.from_(bucket_name).remove(list(to_delete))
+    if to_delete:
+        supabase.storage.from_(bucket_name).remove(list(to_delete))
 
-        piece.photos = [
-            supabase.storage.from_(bucket_name).get_public_url(fp)
-            for fp in incoming_paths
-        ]
+    # Actualizar fotos: existentes conservadas + nuevas
+    piece.photos = kept_urls + new_urls
 
     db.session.commit()
     return jsonify({

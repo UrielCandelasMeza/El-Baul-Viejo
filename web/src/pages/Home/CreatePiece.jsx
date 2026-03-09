@@ -7,7 +7,7 @@ import { useAuth } from "../../context/AuthContext";
 
 const STATUS_OPTIONS = [
   { value: "available", label: "Disponible" },
-  { value: "sold",      label: "Vendido" },
+  { value: "sold", label: "Vendido" },
 ];
 
 function CreatePiece() {
@@ -15,15 +15,15 @@ function CreatePiece() {
   const { user } = useAuth();
   const fileInputRef = useRef(null);
 
-  const [name,        setName]        = useState("");
-  const [price,       setPrice]       = useState("");
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [status,      setStatus]      = useState("available");
+  const [status, setStatus] = useState("available");
   const [categoryIds, setCategoryIds] = useState([]);
-  const [images,      setImages]      = useState([]);
-  const [categories,  setCategories]  = useState([]);
-  const [loading,     setLoading]     = useState(false);
-  const [modal,       setModal]       = useState({ type: "", message: "" });
+  const [images, setImages] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState({ type: "", message: "" });
 
   useEffect(() => {
     const fetchCategories = async () => {

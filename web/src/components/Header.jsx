@@ -4,9 +4,14 @@ import { useAuth } from "../context/AuthContext";
 
 function Header({ variant = "public" }) {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth?.() ?? {};
+  const { logout } = useAuth?.() ?? {};
 
   const isAdmin = variant === "admin";
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/admin/login");
+  }
 
   return (
     <header className="bg-dark sticky top-0 z-50 shadow-[0_2px_14px_rgba(62,47,35,0.4)]">
@@ -39,7 +44,7 @@ function Header({ variant = "public" }) {
                 Gestionar categorías
               </button>
               <button
-                onClick={() => navigate("/admin/login")}
+                onClick={handleLogout}
                 className="flex items-center gap-1.5 text-ivory/50 text-sm hover:text-red-400 transition-colors"
               >
                 <MdLogout size={16} />

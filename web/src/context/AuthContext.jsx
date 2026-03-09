@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { loginUser, verifyToken } from "../connection/auth";
+import { loginUser, verifyToken, logoutUser } from "../connection/auth";
 
 const AuthContext = createContext(null);
 
@@ -11,7 +11,7 @@ export const useAuth = () => {
   return context;
 }
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +25,7 @@ const AuthProvider = ({children}) => {
         setUser(res.data.user);
         setIsAuthenticated(true);
       } catch (error) {
-        if(error.response.data.error){
+        if (error.response.data.error) {
           setError(error.response.data.error);
         } else {
           setError(error.response.data.message)
@@ -41,26 +41,35 @@ const AuthProvider = ({children}) => {
   }, [])
 
   const login = async (data) => {
-   try {
-    setLoading(true);
-    setError(null);
-    const res = await loginUser(data);
-    console.log(res.data.user)
-    setUser(res.data.user);
-    setIsAuthenticated(true);
-   } catch (error) {
-    if(error.response.data.error){
-      setError(error.response.data.error);
-    } else {
-      setError(error.response.data.message)
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await loginUser(data);
+      setUser(res.data.user);
+      setIsAuthenticated(true);
+    } catch (error) {
+      if (error.response.data.error) {
+        setError(error.response.data.error);
+      } else {
+        setError(error.response.data.message)
+      }
+      throw error;
+    } finally {
+      setLoading(false);
     }
-   } finally {
-    setLoading(false);
-   }
   }
 
+  const logout = async () => {
+    try {
+      await logoutUser();
+    } catch {
+      // Aunque falle la petición, limpiamos el estado local
+    }
+    setUser(null);
+    setIsAuthenticated(false);
+  }
   return (
-    <AuthContext.Provider value={{user, loading, error, isAuthenticated, login, setError}}>
+    <AuthContext.Provider value={{ user, loading, error, isAuthenticated, login, setError, logout }}>
       {children}
     </AuthContext.Provider>
   );
