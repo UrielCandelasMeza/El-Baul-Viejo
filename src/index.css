@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import "tailwindcss";
+
+
+@theme {
+  /* ── Colores ── */
+  --color-ivory:        #F5F1E8;
+  --color-ivory-dark:   #EDE7D9;
+  --color-dark:         #3E2F23;
+  --color-dark-light:   #5C4535;
+  --color-gold:         #C2A15A;
+  --color-gold-dark:    #A0803A;
+  --color-gold-light:   #D4B97A;
+  --color-bronze:       #8C6A3B;
+  --color-bronze-light: #B8905A;
+  --color-text:         #1A1A1A;
+  --color-muted:        #7A6A5A;
+  --color-card:         #FDFAF4;
+  --color-border:       #DDD0BB;
+
+  /* ── Tipografía ── */
+  --font-sans:    "Open Sans", sans-serif;
+  --font-display: "Playfair Display", serif;
+
+  /* ── Animaciones ── */
+  --animate-fade-up:  fadeUp 0.5s ease both;
+  --animate-fade-in:  fadeIn 0.4s ease both;
+  --animate-shimmer:  shimmer 1.4s infinite;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+/* ── Reset base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-ivory);
+  color: var(--color-text);
+}
+
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-ivory); }
+::-webkit-scrollbar-thumb { background: var(--color-bronze); border-radius: 3px; }
