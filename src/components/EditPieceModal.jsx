@@ -78,8 +78,18 @@ export default function EditPieceModal({ piece, onClose, onUpdated }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name.trim() || !price) {
-      setError("El nombre y el precio son obligatorios.");
+    if (!name.trim() || !price || !status || categoryIds.length == 0 || existingPhotos.length == 0) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+
+    if (price <= 0) {
+      setError("El precio debe ser mayor a cero.");
+      return;
+    }
+
+    if (price > 50000) {
+      setError("El precio debe ser menor a 50,000.")
       return;
     }
 
@@ -104,6 +114,7 @@ export default function EditPieceModal({ piece, onClose, onUpdated }) {
       onUpdated(res.data.piece ?? null);
       onClose();
     } catch (err) {
+      console.log(err)
       setError(err.response?.data?.message ?? "Error al actualizar la pieza.");
     } finally {
       setLoading(false);

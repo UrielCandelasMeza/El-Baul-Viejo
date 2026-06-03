@@ -28,7 +28,7 @@ function Modal({ type = "message", message, onClose, duration = 4000 }) {
     },
     message: {
       border: "border-l-4 border-l-[#C2A15A]",
-      icon: <MdInfoOutline className="w-5 h-5 text-[#C2A15A] shrink-0" size={20} />,
+      icon: <MdInfoOutline className="w-5 h-5 text-gold shrink-0" size={20} />,
       label: "Mensaje",
       labelColor: "text-[#C2A15A]",
     },
@@ -42,7 +42,7 @@ function Modal({ type = "message", message, onClose, duration = 4000 }) {
       aria-live="assertive"
       className={`
         fixed bottom-6 right-6 z-50 flex items-start gap-3
-        bg-[#FDFAF4] shadow-lg rounded-md px-4 py-3 max-w-sm w-full
+        bg-card shadow-lg rounded-md px-4 py-3 max-w-sm w-full
         ${current.border}
         animate-fade-up
       `}
@@ -55,7 +55,7 @@ function Modal({ type = "message", message, onClose, duration = 4000 }) {
         <p className={`text-xs font-semibold uppercase tracking-wide mb-0.5 ${current.labelColor}`} style={{ fontFamily: "'Playfair Display', serif" }}>
           {current.label}
         </p>
-        <p className="text-sm text-[#3E2F23] leading-snug break-words" style={{ fontFamily: "'Open Sans', sans-serif" }}>
+        <p className="text-sm text-dark leading-snug wrap-break-words" style={{ fontFamily: "'Open Sans', sans-serif" }}>
           {message}
         </p>
       </div>
@@ -64,7 +64,7 @@ function Modal({ type = "message", message, onClose, duration = 4000 }) {
       <button
         onClick={onClose}
         aria-label="Cerrar notificación"
-        className="text-[#7A6A5A] hover:text-[#3E2F23] transition-colors cursor-pointer mt-0.5 shrink-0"
+        className="text-muted hover:text-dark transition-colors cursor-pointer mt-0.5 shrink-0"
       >
         <MdClose size={18} />
       </button>

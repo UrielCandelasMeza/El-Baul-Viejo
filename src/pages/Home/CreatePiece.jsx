@@ -78,6 +78,17 @@ function CreatePiece() {
       setModal({ type: "error", message: "El nombre, el precio, las imágenes y las categorías son obligatorios." });
       return;
     }
+
+    if (price <= 0) {
+      setModal({ type: "error", message: "El precio debe ser mayor a cero." });
+      return;
+    }
+
+    if (price > 50000) {
+      setModal({ type: "error", message: "El precio debe ser menor a 50,000." })
+      return
+    }
+
     setLoading(true);
     try {
       const formData = new FormData();

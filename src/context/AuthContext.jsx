@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { loginUser, verifyToken, logoutUser } from "../connection/auth";
+import { loginUser, verifyToken, logoutUser } from "../connection/auth.js";
 
 const AuthContext = createContext(null);
 
@@ -25,10 +25,10 @@ const AuthProvider = ({ children }) => {
         setUser(res.data.user);
         setIsAuthenticated(true);
       } catch (error) {
-        if (error.response.data.error) {
+        if (error?.response?.data?.error) {
           setError(error.response.data.error);
         } else {
-          setError(error.response.data.message)
+          setError(error?.response?.data?.message)
         }
         setUser(null);
         setIsAuthenticated(false);

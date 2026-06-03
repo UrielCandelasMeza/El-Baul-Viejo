@@ -275,7 +275,7 @@ export default function PieceDetailPage() {
               <h2 className="font-display text-xl text-dark font-semibold whitespace-nowrap">
                 Piezas con categorías similares
               </h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-gold/50 to-transparent" />
+              <div className="flex-1 h-px bg-linear-to-r from-gold/50 to-transparent" />
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">

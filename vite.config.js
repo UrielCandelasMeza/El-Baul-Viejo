@@ -12,7 +12,10 @@ export default defineConfig({
     allowedHosts: ["remi-unredeemable-amani.ngrok-free.dev"],
     proxy: {
       "/api": {
-        target: env.VITE_API_URL ?? "http://localhost:5000",
+        target:
+          env.ENVIRONMENT == "production"
+            ? env.VITE_API_URL
+            : "http://localhost:5000",
         changeOrigin: true,
       },
     },
