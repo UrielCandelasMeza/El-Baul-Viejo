@@ -4,6 +4,8 @@ import LandingPage from "./pages/LandingPage";
 import MainLayout from "./pages/_layout";
 import Piece from "./pages/Piece";
 import LoginPage from "./pages/LoginPage";
+import ContactPage from "./pages/ContactPage";
+import AboutPage from "./pages/AboutPage";
 
 import AdminLayout from "./pages/Home/_layout";
 import CreatePiece from "./pages/Home/CreatePiece";
@@ -20,6 +22,8 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<LandingPage />} />
             <Route path="/piece/:id" element={<Piece />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/admin/login" element={<LoginPage />} />
           </Route>
           <Route element={<ProtectedRoute />}>

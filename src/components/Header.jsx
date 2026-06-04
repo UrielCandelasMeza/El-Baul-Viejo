@@ -52,12 +52,20 @@ function Header({ variant = "public" }) {
               </button>
             </>
           ) : (
-            <a
-              href="#contacto"
-              className="text-ivory/80 text-sm font-medium hover:text-gold transition-colors duration-200 px-2 py-1"
-            >
-              Contáctanos
-            </a>
+            <>
+              <a
+                href="/about"
+                className="text-ivory/80 text-sm font-medium hover:text-gold transition-colors duration-200 px-2 py-1"
+              >
+                Nosotros
+              </a>
+              <a
+                href="/contact"
+                className="text-ivory/80 text-sm font-medium hover:text-gold transition-colors duration-200 px-2 py-1"
+              >
+                Contáctanos
+              </a>
+            </>
           )}
         </nav>
 
