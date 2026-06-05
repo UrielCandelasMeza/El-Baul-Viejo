@@ -1,9 +1,10 @@
-import { FaFacebook, FaInstagram, FaWhatsapp, FaTelegram } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaWhatsapp, FaFacebookMessenger } from "react-icons/fa";
 import { useNavigate } from "react-router";
 
 const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=100044156269092";
 const INSTAGRAM_URL = "https://www.instagram.com/elbaulviejo";
 const WS_URL = `https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER ?? "525500000000"}`;
+const MESSENGER_URL = `https://m.me/${import.meta.env.VITE_MESSENGER_PAGE ?? "elbaulviejo"}`;
 
 function SocialChip({ href, icon, label, id }) {
   return (
@@ -75,6 +76,12 @@ function Footer() {
               href={WS_URL}
               icon={<FaWhatsapp size={14} />}
               label="WhatsApp"
+            />
+            <SocialChip
+              id="footer-messenger"
+              href={MESSENGER_URL}
+              icon={<FaFacebookMessenger size={14} />}
+              label="Messenger"
             />
           </div>
         </div>
@@ -162,6 +169,21 @@ function Footer() {
             >
               <FaInstagram size={16} style={{ color: "#E1306C", flexShrink: 0 }} />
               Instagram — @elbaulviejo
+            </a>
+            <a
+              id="footer-messenger-direct"
+              href={MESSENGER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 text-sm transition-colors duration-200"
+              style={{ color: "rgba(245,241,232,0.65)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#0084FF")}
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = "rgba(245,241,232,0.65)")
+              }
+            >
+              <FaFacebookMessenger size={16} style={{ color: "#0084FF", flexShrink: 0 }} />
+              Messenger — Consultas rápidas
             </a>
           </div>
         </div>

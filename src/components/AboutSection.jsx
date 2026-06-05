@@ -1,8 +1,8 @@
-import { FaWhatsapp, FaTelegram } from "react-icons/fa";
+import { FaWhatsapp, FaFacebookMessenger } from "react-icons/fa";
 import { MdStorefront, MdInfoOutline } from "react-icons/md";
 
 const WS_URL = `https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER ?? "525500000000"}`;
-const TELEGRAM_URL = "https://t.me/elbaulviejo"; // update if needed
+const MESSENGER_URL = `https://m.me/${import.meta.env.VITE_MESSENGER_PAGE ?? "elbaulviejo"}`;
 
 export default function AboutSection() {
   return (
@@ -91,19 +91,19 @@ export default function AboutSection() {
           >
             <div
               className="w-11 h-11 rounded-xl flex items-center justify-center text-xl"
-              style={{ background: "rgba(38,142,228,0.12)", color: "#26A5E4" }}
+              style={{ background: "rgba(0,132,255,0.12)", color: "#0084FF" }}
             >
-              <FaTelegram />
+              <FaFacebookMessenger />
             </div>
             <h3
               className="font-display text-lg font-semibold"
               style={{ color: "#3E2F23" }}
             >
-              Contacta por Telegram
+              Contacta por Messenger
             </h3>
             <p className="text-sm leading-relaxed" style={{ color: "#7A6A5A" }}>
-              También puedes encontrarnos en Telegram para hacer consultas,
-              negociar y coordinar el envío o entrega de tu pieza.
+              También puedes escribirnos por Facebook Messenger para hacer
+              consultas, negociar y coordinar el envío o entrega de tu pieza.
             </p>
           </div>
         </div>
@@ -128,20 +128,20 @@ export default function AboutSection() {
           </a>
 
           <a
-            id="about-telegram-cta"
-            href={TELEGRAM_URL}
+            id="about-messenger-cta"
+            href={MESSENGER_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-7 py-3.5 rounded-xl text-sm font-semibold text-white transition-all duration-200"
             style={{
-              background: "linear-gradient(135deg,#26A5E4,#1a8fc4)",
-              boxShadow: "0 4px 16px rgba(38,165,228,0.35)",
+              background: "linear-gradient(135deg,#0084FF,#0066cc)",
+              boxShadow: "0 4px 16px rgba(0,132,255,0.35)",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
             onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
           >
-            <FaTelegram size={18} />
-            Contactar por Telegram
+            <FaFacebookMessenger size={18} />
+            Contactar por Messenger
           </a>
         </div>
       </div>
